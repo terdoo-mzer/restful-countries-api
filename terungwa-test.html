@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+</head>
+<body>
+
+<h2>Images Side by Side</h2>
+<p>How to create side-by-side images with the CSS float property:</p>
+
+<div class="row">
+  <div class="column">
+    <img class="img" src="img_snow.jpg" alt="Snow" style="width:100%" data-id=1>
+  </div>
+  <div class="column">
+    <img class="img" src="img_forest.jpg" alt="Forest" style="width:100%" data-id=2>
+  </div>
+  <div class="column">
+    <img class="img" src="img_mountains.jpg" alt="Mountains" style="width:100%" data-id=3>
+  </div>
+</div>
+<script>
+var gameClass = document.getElementsByClassName("img");
+console.log(gameClass)
+		var gameFunction = function() {					
+			var attribute = this.getAttribute("data-id");
+            alert(attribute)
+		};
+		for (var i = 0; i < gameClass.length; i++) {
+			gameClass[i].addEventListener('click', gameFunction, false);
+		}
+</script>
+</body>
+</html>

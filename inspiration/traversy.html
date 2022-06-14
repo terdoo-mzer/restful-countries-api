@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="loader" style="font-size: 46px;" hidden>Loading...</div>
+    <div id="match-List">
+        
+    </div>
+    
+    <script>
+        const search = document.getElementById('search');
+        const matchList = document.getElementById('match-List');
+        let countriesArr = [];
+
+        // Get user input
+        // search.addEventListener('input', value => {
+
+        // })
+
+        // Get countries from Api
+        const getCountries = async() => {
+            try {
+                document.querySelector('#loader').removeAttribute("hidden");
+
+                const res = await fetch('https://restcountries.com/v3.1/all');
+                countriesArr = await res.json();
+                console.log(countriesArr)
+
+                displayCountries(countriesArr)
+
+                if(countriesArr) {
+                     document.querySelector('#loader').setAttribute('hidden', true)
+                }
+            }
+            catch(err ) {
+                console.log(err)
+            }
+           
+        }
+
+     
+
+        // Search countries
+
+        // Filter with select tag
+
+        // Display countries
+      function displayCountries(data) {
+            if(data.length > 0) {
+                const html = data.map(match => `
+                    <div>${match.name.common}</div>
+                `).join('');
+
+                matchList.innerHTML = html;
+            }
+       }
+
+       function numberWithCommas(x) {
+             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+
+        getCountries();
+
+        
+
+        // const searchStates = async searchText => {
+          
+
+          
+
+        //     console.log(states)
+
+        //     // Get matches to currnt text input
+        //     let matches = states.filter(state => {
+        //         const regex = new RegExp(`^${searchText}`, `gi`);
+        //         return state.name.common.match(regex);
+        //     });
+
+        //     console.log(matches)
+
+        //     // if(searchText.length === 0) {
+        //     //     matches = [];
+        //     //     matchList.innerHTML = '';
+        //     // }
+
+        //      outputHtml(matches)
+        // }
+
+        // const outputHtml = matches => {
+            
+        //     if(matches.length > 0) {
+        //         const html = matches.map(match => `
+        //             <div>${match.name.common}</div>
+        //         `);
+        //         console.log(html.length)
+
+        //         matchList.innerHTML = html;
+        //     }
+        // }
+        // searchStates('')
+
+        // search.addEventListener('input', () => searchStates(search.value));
+        
+    </script>
+</body>
+</html>

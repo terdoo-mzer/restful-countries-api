@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+            background-color: blue;
+            margin: 10px;
+        }
+
+        /* Clearfix (clear floats) */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Images Side by Side</h2>
+    <p>How to create side-by-side images with the CSS float property:</p>
+
+    <div class="row" id="container">
+        <!-- <div>
+        <div class="column" data-id=1>
+            <img class="img" src="img_snow.jpg" alt="Snow" style="width:100%">
+            <p>Hello World</p>
+            <p>Hello World</p>
+            <p>Hello World</p>
+          </div>
+    </div>
+
+  <div>
+    <div class="column" data-id=2>
+        <img class="img" src="img_forest.jpg" alt="Forest" style="width:100%">
+        <p>Hello World</p>
+        <p>Hello World</p>
+        <p>Hello World</p>
+      </div>
+  </div>
+ 
+  <div>
+    <div class="column" data-id=3>
+        <img class="img" src="img_mountains.jpg" alt="Mountains" style="width:100%">
+        <p>Hello World</p>
+        <p>Hello World</p>
+        <p>Hello World</p>
+      </div>
+  </div> -->
+
+    </div>
+    <script>
+
+        var container = document.getElementById('container');
+
+        let newArr = []
+
+        function getCountries() {
+            fetch('https://restcountries.com/v3.1/all')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    //    newArr = [...data]
+                    // console.log(newArr)
+                    mapCountries(data)
+                })
+        }
+
+        function mapCountries(data) {
+            // console.log(newArr)
+            if (data) {
+                const html = data.map(datum =>
+                    `
+                <div class="col-3 mb-5">
+                <div class="card" data-countryid=${datum.name.common}>
+                  
+                        <img src="${datum.flags['png']}" class="card-img-top" alt="${datum.name.common} Flag">
+                  
+                        <div class="card-body">
+                            <h5 class="card-title">${datum.name.common}</h5>
+                            <div class="card-text">
+                                <span class="detail-title">Population:</span>
+                                <span class="detail">${datum.population}</span>
+                            </div>
+                            <div class="card-text">
+                                <span class="detail-title">Region:</span>
+                                <span class="detail"> ${datum.region}</span>
+                            </div>
+                            <div class="card-text">
+                                <span class="detail-title">Capital:</span>
+                                <span class="detail">${datum.capital}</span>
+                            </div>
+                        </div>
+                  
+                </div>
+            </div>
+                `
+
+                ).join('');
+                container.innerHTML = html;
+            }
+        }
+
+        var gameClass = document.getElementsByClassName("card");
+        console.log(gameClass)
+
+        var gameFunction = function () {
+            var attribute = this.getAttribute("data-countryid");
+            console.log(attribute)
+        };
+
+        for (var i = 0; i < gameClass.length; i++) {
+           gameClass[i].addEventListener('click', gameFunction, true);
+        }
+
+        document.onload = getCountries();
+
+
+    </script>
+</body>
+
+</html>
